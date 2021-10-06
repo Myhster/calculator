@@ -1,0 +1,30 @@
+* {
+  background: rgb(19, 19, 24);
+}
+
+.App {
+  display: flex;
+  justify-content: center;
+  background: rgb(19, 19, 24) e;
+}
+.equal {
+  height: 50px;
+  width: 50px;
+  background: blanchedalmond;
+}
+.digitBtn {
+  height: 50px;
+  width: 50px;
+  background: blanchedalmond;
+  cursor: crosshair;
+}
+.display {
+  height: 50px;
+  width: 350px;
+  background: rgb(231, 188, 123);
+  text-align: right;
+}
+.digitField {
+  display: grid;
+  grid-template-columns: 60px 60px 60px;
+}
