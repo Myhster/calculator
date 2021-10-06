@@ -4,16 +4,28 @@ import { calcButtons, operartors } from './buttons.js';
 
 function App() {
   const [output, setOutput] = useState('0');
-  let counter = 0;
+  const [dotCounter, setDotCounter] = useState(0);
 
   const buts = calcButtons.map((button, index) => {
     const displayLogic = (prevOut) => {
-      if (prevOut == '0' && output.length == 1) {
-        counter++;
-        console.log(counter);
-        return button.value;
-      } else {
+      if (prevOut === '0' && button.value === '0') {
         console.log(prevOut);
+        return button.value;
+      } else if (prevOut === '0' && button.value === '.') {
+        setDotCounter(dotCounter + 1);
+        console.log(dotCounter);
+        return '0.';
+      } else if (prevOut === '0.' && button.value === '.') {
+        return '0.';
+      } else if (prevOut === '0' && button.value !== '.') {
+        console.log(dotCounter);
+        return button.value;
+      } else if (prevOut !== '0' && button.value !== '.') {
+        console.log(dotCounter);
+        return prevOut + button.value;
+      } else if (prevOut !== '0' && button.value === '.' && dotCounter === 0) {
+        setDotCounter(dotCounter + 1);
+        console.log(dotCounter);
         return prevOut + button.value;
       }
     };
@@ -40,11 +52,15 @@ function App() {
 
   return (
     <div className='App'>
-      <div className className='digitField'>
-        {buts}
-      </div>
+      <div className='digitField'>{buts}</div>
       <div>{ops}</div>
-      <div className='digitBtn' id='clear' onClick={() => setOutput('0')}>
+      <div
+        className='digitBtn'
+        id='clear'
+        onClick={() => {
+          return setOutput('0'), setDotCounter(0);
+        }}
+      >
         clear
       </div>
       <div className='display' id='display'>
