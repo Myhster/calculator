@@ -3,6 +3,7 @@
 }
 
 .App {
+  margin-top: 80px;
   display: flex;
   justify-content: center;
   background: rgb(19, 19, 24) e;
@@ -24,6 +25,13 @@
   background: rgb(231, 188, 123);
   text-align: right;
 }
+.metaCalc {
+  height: 50px;
+  width: 350px;
+  background: rgb(224, 203, 172);
+  text-align: right;
+}
+
 .digitField {
   display: grid;
   grid-template-columns: 60px 60px 60px;

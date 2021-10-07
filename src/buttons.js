@@ -59,6 +59,14 @@ const calcButtons = [
     id: 'decimal',
     value: '.',
   },
+  {
+    id: 'equals',
+    value: '=',
+  },
+  {
+    id: 'clear',
+    value: 'clear',
+  },
 ];
 
 const operartors = [
