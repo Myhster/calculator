@@ -5,28 +5,45 @@ import { calcButtons, operartors } from './buttons.js';
 function App() {
   const [output, setOutput] = useState('0');
   const [dotCounter, setDotCounter] = useState(0);
+  const [metaCalc, setMetaCalc] = useState('');
+  const regex = /[+\-*\/]/;
 
   const buts = calcButtons.map((button, index) => {
     const displayLogic = (prevOut) => {
-      if (prevOut === '0' && button.value === '0') {
-        console.log(prevOut);
-        return button.value;
-      } else if (prevOut === '0' && button.value === '.') {
-        setDotCounter(dotCounter + 1);
-        console.log(dotCounter);
-        return '0.';
-      } else if (prevOut === '0.' && button.value === '.') {
-        return '0.';
-      } else if (prevOut === '0' && button.value !== '.') {
-        console.log(dotCounter);
-        return button.value;
-      } else if (prevOut !== '0' && button.value !== '.') {
-        console.log(dotCounter);
-        return prevOut + button.value;
-      } else if (prevOut !== '0' && button.value === '.' && dotCounter === 0) {
-        setDotCounter(dotCounter + 1);
-        console.log(dotCounter);
-        return prevOut + button.value;
+      if (prevOut.length < 9) {
+        if (prevOut === '0' && button.value === '0') {
+          console.log(prevOut);
+          return button.value;
+        } else if (prevOut === '0' && button.value === '.') {
+          setDotCounter(dotCounter + 1);
+          return '0.';
+        } else if (prevOut === '0' && button.value === '-') {
+          return button.value;
+        } else if (regex.test(button.value) == true) {
+          setMetaCalc(metaCalc + prevOut + button.value);
+          setDotCounter(0);
+          setOutput('0');
+          return null;
+        } else if (dotCounter > 0 && button.value === '.') {
+          return prevOut;
+        } else if (prevOut === '0' && button.value !== '.') {
+          return button.value;
+        } else if (prevOut !== '0' && button.value !== '.') {
+          return prevOut + button.value;
+        } else if (
+          prevOut !== '0' &&
+          button.value === '.' &&
+          dotCounter === 0
+        ) {
+          setDotCounter(dotCounter + 1);
+          return prevOut + button.value;
+        }
+      } else if (prevOut.length == 9 && regex.test(button.value) == true) {
+        setDotCounter(0);
+        setOutput('0');
+        return null;
+      } else {
+        return prevOut;
       }
     };
 
@@ -58,7 +75,7 @@ function App() {
         className='digitBtn'
         id='clear'
         onClick={() => {
-          return setOutput('0'), setDotCounter(0);
+          return setOutput('0'), setDotCounter(0), setMetaCalc('');
         }}
       >
         clear
@@ -66,6 +83,7 @@ function App() {
       <div className='display' id='display'>
         {output}
       </div>
+      <div className='display'>{metaCalc}</div>
       <div className='equal' id='equals'>
         =
       </div>
@@ -74,3 +92,13 @@ function App() {
 }
 
 export default App;
+
+/* let equ = '-10.99.*--0'
+let noDoubleMinus = equ.replace(/\-\-/g, '+')
+-------------------equ.replace(/\-\+|\+\-/g,'-')
+let numbers = noDoubleMinus.split('*')
+let calc = parseFloat(numbers[0])/parseFloat(numbers[1])
+
+let result = parseFloat(equ)
+console.log(calc)
+console.log(numbers) */
