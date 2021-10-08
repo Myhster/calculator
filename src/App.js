@@ -10,6 +10,25 @@ function App() {
   const [calcCount, setCalcCount] = useState(0);
   const numReg = /[1-9]/;
 
+  function round(value, decimals) {
+    return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+  }
+
+  var math_it_up = {
+    '+': function (x, y) {
+      return x + y;
+    },
+    '-': function (x, y) {
+      return x - y;
+    },
+    '*': function (x, y) {
+      return x * y;
+    },
+    '/': function (x, y) {
+      return x / y;
+    },
+  };
+
   const clear = () => {
     return [setOutput('0'), setDotCounter(0), setMetaCalc(0), setCalcCount(0)];
   };
@@ -46,6 +65,8 @@ function App() {
         }
         return prevOut + button.value;
       } //----------------------------^^^ StringNumbers ^^^----------------
+      //----------------------------- Operators --------------------------
+      //----------------------------------------Minus---------------------
       else if (button.value === '-') {
         if (prevOut === '0') {
           return '-';
@@ -60,14 +81,73 @@ function App() {
           setDotCounter(0);
           setOutput('0');
           setCalcCount(1);
+          setOpSign('-');
           return null;
         } else {
-          setMetaCalc(metaCalc - parseFloat(prevOut));
+          setMetaCalc(
+            round(math_it_up[opSign](metaCalc, parseFloat(prevOut)), 5)
+          );
           setDotCounter(0);
           setOutput('0');
+          setOpSign('-');
           return null;
         }
       }
+      //----------------------------------------Plus---------------------
+      else if (button.value === '+') {
+        if (prevOut === '0') {
+          return '0';
+        } else if (prevOut === '-0.' || prevOut === '-.') {
+          return '-0.';
+        } else if (prevOut === '-') {
+          return '-';
+        } else if (prevOut === '0.') {
+          return '0.';
+        } else if (metaCalc === 0 && calcCount < 1) {
+          setMetaCalc(parseFloat(prevOut));
+          setDotCounter(0);
+          setOutput('0');
+          setCalcCount(1);
+          setOpSign('+');
+          return null;
+        } else {
+          setMetaCalc(
+            round(math_it_up[opSign](metaCalc, parseFloat(prevOut)), 5)
+          );
+          //setMetaCalc(round(metaCalc + parseFloat(prevOut), 5))
+          setDotCounter(0);
+          setOutput('0');
+          setOpSign('+');
+          return null;
+        }
+      } //----------------------------------------Multipcation---------------------
+      else if (button.value === '*') {
+        if (prevOut === '0') {
+          return '0';
+        } else if (prevOut === '-0.' || prevOut === '-.') {
+          return '-0.';
+        } else if (prevOut === '-') {
+          return '-';
+        } else if (prevOut === '0.') {
+          return '0.';
+        } else if (metaCalc === 0 && calcCount < 1) {
+          setMetaCalc(parseFloat(prevOut));
+          setDotCounter(0);
+          setOutput('0');
+          setCalcCount(1);
+          setOpSign('*');
+          return null;
+        } else {
+          setMetaCalc(
+            round(math_it_up[opSign](metaCalc, parseFloat(prevOut)), 5)
+          );
+          //setMetaCalc(round(metaCalc + parseFloat(prevOut), 5))
+          setDotCounter(0);
+          setOutput('0');
+          setOpSign('*');
+          return null;
+        }
+      } //----------------------------------------Division---------------------
     };
     //-------------------------------------------------------------------
     //-------------------------------------------------------------------
