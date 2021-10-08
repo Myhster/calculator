@@ -149,13 +149,13 @@ function App() {
           setMetaCalc(
             round(math_it_up[opSign](metaCalc, parseFloat(prevOut)), 5)
           );
-          //setMetaCalc(round(metaCalc + parseFloat(prevOut), 5))
+
           setDotCounter(0);
           setOutput('0');
           setOpSign('*');
           return null;
         }
-      } //3 + 5 * 6 - 2 / 4 should produce 32.5 or 11.5 as an----------------------------------------Division---------------------
+      } //3 + 5 * 6 - 2 / 4 should produce 32.5 or 11.5 as ----- 5 * - + 5an----------------------------------------Division---------------------
       else if (button.value === '/') {
         /* if (prevOut === '0') {
           return '0';
@@ -177,7 +177,7 @@ function App() {
           setMetaCalc(
             round(math_it_up[opSign](metaCalc, parseFloat(prevOut)), 5)
           );
-          //setMetaCalc(round(metaCalc + parseFloat(prevOut), 5))
+
           setDotCounter(0);
           setOutput('0');
           setOpSign(() => '/');
@@ -185,6 +185,35 @@ function App() {
           return null;
         }
       } //----------------------------------------Equal-Sign---------------------
+      else if (button.value === '=') {
+        if (prevOut === '0') {
+          return '0';
+        } else if (prevOut === '-0.' || prevOut === '-.') {
+          return '-0.';
+        } else if (prevOut === '-') {
+          return '-';
+        } else if (prevOut === '0.') {
+          return '0.';
+        } else if (metaCalc === 0 && calcCount < 1) {
+          setMetaCalc(parseFloat(prevOut));
+          setDotCounter(0);
+          setOutput('0');
+          setCalcCount(1);
+          //setOpSign(() => '=');
+          console.log('first' + opSign);
+          return null;
+        } else {
+          setMetaCalc(0);
+          setDotCounter(0);
+          setCalcCount(0);
+          setOutput(
+            round(math_it_up[opSign](metaCalc, parseFloat(prevOut)), 5)
+          );
+          //setOpSign(() => '=');
+          console.log('second' + opSign);
+          return null;
+        }
+      }
     };
     //-------------------------------------------------------------------
 
@@ -203,7 +232,7 @@ function App() {
   //----------------------------------------------------------------------
   useEffect(() => {
     console.log('useEffect ' + opSign);
-  }, [opSign]);
+  }, [opSign, metaCalc]);
   //----------------------------------------------------------------------
 
   return (
