@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.scss';
 import { calcButtons } from './buttons.js';
 
@@ -30,7 +30,13 @@ function App() {
   };
 
   const clear = () => {
-    return [setOutput('0'), setDotCounter(0), setMetaCalc(0), setCalcCount(0)];
+    return [
+      setOutput('0'),
+      setDotCounter(0),
+      setMetaCalc(0),
+      setCalcCount(0),
+      setOpSign(),
+    ];
   };
 
   const buts = calcButtons.map((button, index) => {
@@ -61,6 +67,7 @@ function App() {
         }
       } else if (numReg.test(button.value) === true) {
         if (prevOut === '0') {
+          console.log(opSign);
           return button.value;
         }
         return prevOut + button.value;
@@ -136,6 +143,7 @@ function App() {
           setOutput('0');
           setCalcCount(1);
           setOpSign('*');
+
           return null;
         } else {
           setMetaCalc(
@@ -147,9 +155,39 @@ function App() {
           setOpSign('*');
           return null;
         }
-      } //----------------------------------------Division---------------------
+      } //3 + 5 * 6 - 2 / 4 should produce 32.5 or 11.5 as an----------------------------------------Division---------------------
+      else if (button.value === '/') {
+        /* if (prevOut === '0') {
+          return '0';
+        } else */ if (prevOut === '-0.' || prevOut === '-.') {
+          return '-0.';
+        } else if (prevOut === '-') {
+          return '-';
+        } else if (prevOut === '0.') {
+          return '0.';
+        } else if (metaCalc === 0 && calcCount < 1) {
+          setMetaCalc(parseFloat(prevOut));
+          setDotCounter(0);
+          setOutput('0');
+          setCalcCount(1);
+          setOpSign(() => '/');
+          console.log('first' + opSign);
+          return null;
+        } else {
+          setMetaCalc(
+            round(math_it_up[opSign](metaCalc, parseFloat(prevOut)), 5)
+          );
+          //setMetaCalc(round(metaCalc + parseFloat(prevOut), 5))
+          setDotCounter(0);
+          setOutput('0');
+          setOpSign(() => '/');
+          console.log(opSign);
+          return null;
+        }
+      } //----------------------------------------Equal-Sign---------------------
     };
     //-------------------------------------------------------------------
+
     //-------------------------------------------------------------------
     return (
       <div
@@ -163,6 +201,9 @@ function App() {
     );
   });
   //----------------------------------------------------------------------
+  useEffect(() => {
+    console.log('useEffect ' + opSign);
+  }, [opSign]);
   //----------------------------------------------------------------------
 
   return (
