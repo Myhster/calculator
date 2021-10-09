@@ -69,27 +69,4 @@ const calcButtons = [
   },
 ];
 
-const operartors = [
-  {
-    id: 'add',
-    value: '+',
-  },
-  {
-    id: 'subtract',
-    value: '-',
-  },
-  {
-    id: 'multiply',
-    value: '*',
-  },
-  {
-    id: 'divide',
-    value: '/',
-  },
-  {
-    id: 'decimal',
-    value: '.',
-  },
-];
-
-export { calcButtons, operartors };
+export { calcButtons };

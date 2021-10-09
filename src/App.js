@@ -102,12 +102,13 @@ function App() {
       }
       //----------------------------------------Plus---------------------
       else if (button.value === '+') {
+        setOpSign('+');
         if (prevOut === '0') {
           return '0';
         } else if (prevOut === '-0.' || prevOut === '-.') {
           return '-0.';
         } else if (prevOut === '-') {
-          return '-';
+          return '0';
         } else if (prevOut === '0.') {
           return '0.';
         } else if (metaCalc === 0 && calcCount < 1) {
@@ -130,6 +131,7 @@ function App() {
       } //----------------------------------------Multipcation---------------------
       else if (button.value === '*') {
         if (prevOut === '0') {
+          setOpSign('*');
           return '0';
         } else if (prevOut === '-0.' || prevOut === '-.') {
           return '-0.';
@@ -216,8 +218,6 @@ function App() {
       }
     };
     //-------------------------------------------------------------------
-
-    //-------------------------------------------------------------------
     return (
       <div
         className='digitBtn text-center'
@@ -230,11 +230,12 @@ function App() {
     );
   });
   //----------------------------------------------------------------------
+  //----------------------------------------------------------------------
   useEffect(() => {
     console.log('useEffect ' + opSign);
   }, [opSign, metaCalc]);
   //----------------------------------------------------------------------
-
+  //----------------------------------------------------------------------
   return (
     <div className='App'>
       <div className='digitField'>{buts}</div>
