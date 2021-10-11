@@ -67,7 +67,7 @@ function App() {
         }
       } else if (numReg.test(button.value) === true) {
         if (prevOut === '0') {
-          console.log(opSign);
+          //console.log(opSign);
           return button.value;
         }
         return prevOut + button.value;
@@ -173,7 +173,7 @@ function App() {
           setOutput('0');
           setCalcCount(1);
           setOpSign(() => '/');
-          console.log('first' + opSign);
+          //console.log('first' + opSign);
           return null;
         } else {
           setMetaCalc(
@@ -183,7 +183,7 @@ function App() {
           setDotCounter(0);
           setOutput('0');
           setOpSign(() => '/');
-          console.log(opSign);
+          //console.log(opSign);
           return null;
         }
       } //----------------------------------------Equal-Sign---------------------
@@ -202,7 +202,7 @@ function App() {
           setOutput('0');
           setCalcCount(1);
           //setOpSign(() => '=');
-          console.log('first' + opSign);
+          //console.log('first' + opSign);
           return null;
         } else {
           setMetaCalc(0);
@@ -212,7 +212,7 @@ function App() {
             round(math_it_up[opSign](metaCalc, parseFloat(prevOut)), 5)
           );
           //setOpSign(() => '=');
-          console.log('second' + opSign);
+          //console.log('second' + opSign);
           return null;
         }
       }
@@ -220,7 +220,8 @@ function App() {
     //-------------------------------------------------------------------
     return (
       <div
-        className='digitBtn text-center'
+        className={button.id + ' singleBtn btn btn-outline-secondary'}
+        style={{ gridArea: button.id }}
         key={index}
         id={button.id}
         onClick={() => setOutput(displayLogic)}
@@ -232,17 +233,25 @@ function App() {
   //----------------------------------------------------------------------
   //----------------------------------------------------------------------
   useEffect(() => {
-    console.log('useEffect ' + opSign);
+    console.log(/* 'useEffect ' + opSign */);
   }, [opSign, metaCalc]);
   //----------------------------------------------------------------------
   //----------------------------------------------------------------------
   return (
     <div className='App'>
-      <div className='digitField'>{buts}</div>
-      <div className='display' id='display'>
-        {output}
+      <div className=''>
+        <h1 className='text-center' id='headline'>
+          Calculator
+        </h1>
+        <div className='calculator'>
+          <div className='metaCalc'>{metaCalc}</div>
+          <div className='display' id='display'>
+            {output}
+          </div>
+          {/* <div className='digitField'></div> */}
+          {buts}
+        </div>
       </div>
-      <div className='metaCalc'>{metaCalc}</div>
     </div>
   );
 }

@@ -1,38 +1,104 @@
-* {
-  background: rgb(19, 19, 24);
+html,
+body {
+  margin: 0px;
+  height: 100%;
 }
 
 .App {
-  margin-top: 80px;
+  height: 100vh;
+  width: 100%;
   display: flex;
   justify-content: center;
-  background: rgb(19, 19, 24) e;
-}
-.equal {
-  height: 50px;
-  width: 50px;
-  background: blanchedalmond;
-}
-.digitBtn {
-  height: 50px;
-  width: 50px;
-  background: blanchedalmond;
-  cursor: crosshair;
-}
-.display {
-  height: 50px;
-  width: 350px;
-  background: rgb(231, 188, 123);
-  text-align: right;
-}
-.metaCalc {
-  height: 50px;
-  width: 350px;
-  background: rgb(224, 203, 172);
-  text-align: right;
+  background: linear-gradient(
+    0deg,
+    rgb(41, 41, 63) 0%,
+    rgb(31, 31, 48) 65%,
+    rgb(19, 19, 29) 100%
+  );
 }
 
-.digitField {
+#headline {
+  margin-top: 10vh;
+  font-family: 'Segment7Standard';
+  animation-name: glow;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-play-state: play;
+}
+@keyframes glow {
+  0% {
+    color: aliceblue;
+  }
+  30% {
+    color: greenyellow;
+    text-shadow: 1px 1px 30px greenyellow;
+  }
+  70% {
+    color: greenyellow;
+    text-shadow: 1px 1px 30px greenyellow;
+  }
+  100% {
+    color: aliceblue;
+  }
+}
+
+.display {
+  font-family: 'Segment7Standard';
+  font-size: 125%;
+  grid-area: disp;
+  background: yellowgreen;
+  box-shadow: 1px 1px 15px greenyellow;
+  letter-spacing: 3px;
+  text-align: end;
+  line-height: 50px;
+  padding-right: 5px;
+  border-radius: 2px;
+  border-radius: 3px;
+  border: 1px solid rgb(124, 124, 124);
+}
+.metaCalc {
+  font-family: 'Segment7Standard';
+  font-size: 125%;
+  grid-area: meta;
+  background: rgb(236, 236, 236);
+  letter-spacing: 3px;
+  text-align: end;
+  line-height: 50px;
+  padding-right: 5px;
+  border-radius: 3px;
+  border: 1px solid rgb(124, 124, 124);
+}
+.singleBtn {
+  background: rgb(236, 236, 236);
+  font-size: 115%;
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
+  color: rgb(49, 49, 49);
+  font-weight: 500;
+}
+.singleBtn:hover {
+  background: rgb(66, 66, 80);
+}
+
+#clear {
+  background: rgb(243, 209, 193);
+  text-align: center;
+}
+#clear:hover {
+  background: rgb(201, 38, 71);
+}
+.calculator {
+  margin-top: 5vh;
   display: grid;
-  grid-template-columns: 60px 60px 60px;
+  grid-template-columns: repeat(5, minmax(30px, 10vw));
+  grid-template-rows: 50px 50px;
+  grid-gap: 5px 5px;
+  grid-template-areas:
+    'meta meta meta meta meta'
+    'disp disp disp disp disp'
+    'seven eight nine clear clear'
+    'four five six multiply divide'
+    'one two three add subtract'
+    'zero zero decimal equals equals';
 }
